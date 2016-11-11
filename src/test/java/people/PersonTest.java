@@ -1,4 +1,4 @@
-package dao;
+package people;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,21 +16,21 @@ public class PersonTest extends AbstractTestNGSpringContextTests{
 @Autowired
 Person person;
 
-
     @org.testng.annotations.BeforeMethod
     public void setUp() throws Exception {
     }
 
     @Test()
     public void setNameTest(){
-        Assert.assertNotNull(person.name);
-        person.name = "Vasia";
+        Assert.assertNotNull(person.getName());
+        person.setName("Vasia");
         Assert.assertEquals(person.getName(), "Vasia");
     }
 
     @Test()
     public void getNameTest(){
-        Assert.assertNotNull(person.name);
+        Assert.assertNotEquals(0, person.getAge());
+        Assert.assertNotNull(person.getName());
     }
 
     @org.testng.annotations.AfterMethod

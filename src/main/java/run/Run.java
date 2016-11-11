@@ -1,19 +1,22 @@
 package run;
 
-import dao.Person;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import people.Person;
 
 /**
  * Created by Oleksandra_Dmytrenko on 11/10/2016.
  */
+@Slf4j
 public class Run {
-    final static Logger log = LoggerFactory.getLogger(Run.class);
+//    final static Logger log = LoggerFactory.getLogger(Run.class);
 
     public static void main(String[] args) {
         log.info("Initialize Spring Context");
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/context.xml");
-        System.out.println(context.getBean(Person.class).toString());
+
+        log.info("Get Person bean");
+        final Person person1 = context.getBean(Person.class);
+        log.info("Speak {}", person1.sayQuote());
     }
 }
