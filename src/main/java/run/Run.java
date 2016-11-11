@@ -6,6 +6,7 @@ import people.Person;
 
 /**
  * Created by Oleksandra_Dmytrenko on 11/10/2016.
+ * Enspired by https://www.youtube.com/watch?v=BmBr5diz8WA
  */
 @Slf4j
 public class Run {
