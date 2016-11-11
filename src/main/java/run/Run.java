@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by Oleksandra_Dmytrenko on 11/10/2016.
+ * Enspired by https://www.youtube.com/watch?v=BmBr5diz8WA
  */
 public class Run {
     final static Logger log = LoggerFactory.getLogger(Run.class);
