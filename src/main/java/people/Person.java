@@ -2,6 +2,7 @@ package people;
 
 /**
  * Created by Oleksandra_Dmytrenko on 11/10/2016.
+ * https://www.youtube.com/watch?v=BmBr5diz8WA
  */
 
 import lombok.Getter;
