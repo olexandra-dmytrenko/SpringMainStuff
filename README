@@ -1,6 +1,69 @@
 Шпаргалка по Spring
 
-BeanFactory – создает и хранит все singletone бины в контейнере и потом их уничтожает.
-BeanDefinitionReader кладет бины в мапу: айди – декларация (из какого класса создавать, есть ли инит метод проперти бина и др.).
-Прототайп бины создаются в момент запрашивания. Дестрой метод для них надо прописывать вручную.
-BeanPostProcessor – модифицирует бин в момент создания, перед тем, как он попадет в контейнер.
+* BeanFactory создает и хранит все singletone бины в контейнере и потом их уничтожает.
+* Прототайп бины создаются в момент первого запрашивания. Дестрой метод для них надо прописывать вручную.
+* BeanDefinitionReader кладет бины в мапу: айди – декларация (из какого класса создавать, есть ли инит метод проперти бина и др.).
+* BeanPostProcessor – модифицирует бин в момент создания, перед тем, как он попадет в контейнер.
+* Чтоб активировать работу BeanPostProcessor и подобных - надо прописать бин под этот класс в контекст.
+  Пр. <bean class="people.MeasureTimeBeanPostProcessor"/>
+* Инфраструктурным бинам (BeanPostProcessor) id не надо (пример выше).
+* PostConstruct работает перед проксированием
+* В спринге конструктор бина трехфазовый:
+   1) Конструктор в классе
+   2) public void init() метод в BeanPostProcessor
+   3)
+
+* Бины надо автовайрить через интерфейсы а не классы. Причина - если класс проксируется, его имя изменяется и спринг
+  уже не может его найти. Даже если вы не писали свой прокси для класса, но используете анотации, такие как
+  @Transactional, ваш класс автоматически проксируется.
+  Пр:
+  public class Person implements Quoter {
+  /* очень важный код */
+  }
+  XML:
+      <bean id="person1" class="people.Person" scope="singleton">
+          <property name="name" value="Peter"/>
+      </bean>
+    ИЛИ
+      <context:component-scan base-package="people"/>
+
+    Вызов:
+        final Quoter person1 = context.getBean(Quoter.class);
+
+    При вызове
+        final Person person1 = (Person) context.getBean(Quoter.class);
+    Возникает
+        java.lang.ClassCastException: com.sun.proxy.$Proxy9 cannot be cast to people.Person
+
+    При вызове
+        final Person person1 = context.getBean(Person.class);
+    Возникает
+        org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [people.Person] is defined
+
+Процесс инициализации singleton scope bean:
+[main] INFO run.Run - Initialize Spring Context
+Nov 14, 2016 1:13:48 PM org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1de0aca6: startup date [Mon Nov 14 13:13:48 EET 2016]; root of context hierarchy
+Nov 14, 2016 1:13:48 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [context.xml]
+Спринг просканировал хml, создал бин дефиницишы, заполнив все поля значениями по умолчанию (String = null, int = 0...)
+[main] INFO people.Person - Phase 1. Person constructor runs Person(age=0, name=null)
+[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization starts
+[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization ends
+Запрашиваем бин для использования и тогда он уже заполняется конкретными значениями, указанными в хml
+[main] INFO people.Person - Phase 2. init() method called Person(age=66, name=Peter)
+[main] INFO run.Run - Get Person bean
+[main] INFO people.Person - Peter quotes: My name is Peter. I'm 57.
+
+Процесс инициализации prototype scope bean:
+...
+INFO: Loading XML bean definitions from class path resource [context.xml]
+[main] INFO run.Run - Get Person bean
+Только когда запрашиваем бин, тогда он инициализируется значениями по умолчанию
+[main] INFO people.Person - Phase 1. Person constructor runs Person(age=0, name=null)
+вызываются его сопутствующие методы
+[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization starts
+[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization ends
+заполняется значениями из хмл
+[main] INFO people.Person - Phase 2. init() method called Person(age=66, name=Peter)
+[main] INFO people.Person - Peter quotes: My name is Peter. I'm 42.
