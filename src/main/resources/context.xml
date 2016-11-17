@@ -11,6 +11,7 @@
 
     <bean class="people.InjectRandomIntBeanPostProcessor"/>
     <bean class="people.MeasureTimeBeanPostProcessor"/>
+    <bean class="people.PostProxyInvokerActionListener"/>
     <!--<context:component-scan base-package="people"/>-->
     <!--позволяет считывать аннотации дефолтные спринговые-->
     <!--Чтоб мочь считывать @PostProcessor-->

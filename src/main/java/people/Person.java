@@ -38,7 +38,9 @@ public class Person implements Quoter {
         log.info("Phase 2. init() method called " + this.toString());
     }
 
+    @PostProxy
     public String sayQuote() {
+        log.info("Phase 3");
         final String words = "My name is " + (name == null ? "null" : name) + ". I'm " + age;
         log.info("{} quotes: {}.", (name == null ? "null" : name), words);
         return words;

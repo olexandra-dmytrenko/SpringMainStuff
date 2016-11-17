@@ -40,7 +40,7 @@ public class MeasureTimeBeanPostProcessor implements BeanPostProcessor {
     }
 
     public Object postProcessAfterInitialization(final Object bean, String beanName) throws BeansException {
-        timeCotroller.setEnabled(true);
+//        timeCotroller.setEnabled(true);
         final Class beanClass = mapBeanWithInitialClass.get(beanName);
         if (beanClass != null) {
             return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new InvocationHandler() {
