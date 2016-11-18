@@ -5,6 +5,9 @@ package people;
  * https://www.youtube.com/watch?v=BmBr5diz8WA
  */
 
+import annotations.InjectRandomInt;
+import annotations.MeasureTime;
+import annotations.PostProxy;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -7,6 +7,7 @@ import people.Quoter;
 /**
  * Created by Oleksandra_Dmytrenko on 11/10/2016.
  * Inspired by Eugen Borisov https://www.youtube.com/watch?v=BmBr5diz8WA
+ * Part 2: https://www.youtube.com/watch?v=cou_qomYLNU#t=94.50875
  */
 @Slf4j
 public class Run {

@@ -7,7 +7,7 @@ Inspired by Eugen Borisov https://www.youtube.com/watch?v=BmBr5diz8WA
 * BeanDefinitionReader кладет бины в мапу: айди – декларация (из какого класса создавать, есть ли инит метод проперти бина и др.).
 * BeanPostProcessor – модифицирует бин в момент создания, перед тем, как он попадет в контейнер.
 * Чтоб активировать работу BeanPostProcessor и подобных - надо прописать бин под этот класс в контекст.
-  Пр. <bean class="people.MeasureTimeBeanPostProcessor"/>
+  Пр. <bean class="annotations.MeasureTimeBeanPostProcessor"/>
 * Инфраструктурным бинам (BeanPostProcessor) id не надо (пример выше).
 * PostConstruct работает перед проксированием
 * В спринге конструктор бина трехфазовый:
@@ -51,8 +51,8 @@ Nov 14, 2016 1:13:48 PM org.springframework.beans.factory.xml.XmlBeanDefinitionR
 INFO: Loading XML bean definitions from class path resource [context.xml]
 Спринг просканировал хml, создал бин дефиницишы, заполнив все поля значениями по умолчанию (String = null, int = 0...)
 [main] INFO people.Person - Phase 1. Person constructor runs Person(age=0, name=null)
-[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization starts
-[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization ends
+[main] INFO annotations.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization starts
+[main] INFO annotations.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization ends
 Запрашиваем бин для использования и тогда он уже заполняется конкретными значениями, указанными в хml
 [main] INFO people.Person - Phase 2. init() method called Person(age=66, name=Peter)
 [main] INFO run.Run - Get Person bean
@@ -65,8 +65,8 @@ INFO: Loading XML bean definitions from class path resource [context.xml]
 Только когда запрашиваем бин, тогда он инициализируется значениями по умолчанию
 [main] INFO people.Person - Phase 1. Person constructor runs Person(age=0, name=null)
 вызываются его сопутствующие методы
-[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization starts
-[main] INFO people.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization ends
+[main] INFO annotations.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization starts
+[main] INFO annotations.InjectRandomIntBeanPostProcessor - InjectRandomIntBeanPostProcessor.postProcessBeforeInitialization ends
 заполняется значениями из хмл
 [main] INFO people.Person - Phase 2. init() method called Person(age=66, name=Peter)
 [main] INFO people.Person - Peter quotes: My name is Peter. I'm 42.

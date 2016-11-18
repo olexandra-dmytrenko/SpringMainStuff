@@ -1,4 +1,4 @@
-package people;
+package annotations;
 
 import lombok.Getter;
 import lombok.Setter;
